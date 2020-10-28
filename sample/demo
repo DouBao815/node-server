@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>无缝滚动</title>
+</head>
+<style type="text/css">
+	*{ margin: 0;padding:0;}
+	#box{width: 1200px;height: 200px;margin:100px auto;background: red;position: relative;overflow: hidden;}
+	#box ul{position:absolute;left: 0;top:0;}
+	#box ul li{width: 300px;height: 200px;float: left;list-style: none;}
+</style>
+<script>
+	window.onload=function(){
+		var Ul1=document.getElementById('box').getElementsByTagName('ul')[0];
+		var List=Ul1.getElementsByTagName("li");
+		var timer=null;
+		var speed=-4;
+		Ul1.innerHTML+=Ul1.innerHTML;
+		//ul的宽度
+		Ul1.style.width=List[0].offsetWidth*List.length+"px";
+		//ul像左偏移ul的宽度的一半的时候，让他的left为0
+		var ListWidth=(List[0].offsetWidth*List.length)/2;
+		
+		function move(){
+			if(Ul1.offsetLeft<-ListWidth){
+				Ul1.style.left="0";
+			}
+			if(Ul1.offsetLeft>0){
+				Ul1.style.left=-ListWidth+"px";
+			}
+			Ul1.style.left=Ul1.offsetLeft+speed+"px";
+			
+		}
+
+		timer=setInterval(move,30);
+
+		for(var i=0;i<List.length;i++){
+			List[i].onmouseover=function(){
+				clearInterval(timer);
+			}
+			List[i].onmouseout=function(){
+				timer=setInterval(move,30);
+				// if(speed<0){
+				// 	speed=4;
+				// }else{
+				// 	speed=-4;
+				// }
+			}
+		}
+		
+	}
+</script>
+<body>
+	<div id="box">
+		<ul id="ul1">
+			<li><img src="img/lf1.jpg"></li>
+			<li><img src="img/lf2.jpg"></li>
+			<li><img src="img/lf3.jpg"></li>
+			<li><img src="img/lf4.jpg"></li>
+		</ul>
+	</div>
+</body>
+</html>
